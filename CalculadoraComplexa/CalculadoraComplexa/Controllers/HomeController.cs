@@ -4,26 +4,23 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace CalculadoraComplexa.Controllers
-{
-    public class HomeController : Controller
-    {
+namespace CalculadoraComplexa.Controllers {
+    public class HomeController : Controller {
         // GET: Home
         [HttpGet] // esta anotação é facultativa, pois, por defeito 
-        public ActionResult Index()
-        {
+        public ActionResult Index() {
             limpaCampos();
             ViewBag.Visor = "0";
             return View();
         }
         // POST: Home
         [HttpPost]
-        public ActionResult Index(string bt, string visor){
+        public ActionResult Index(string bt, string visor) {
 
             // identificar o valor da variavel 'bt'
             string ausar = "";
-            switch (bt)
-            {
+            switch (bt) {
+
                 case "0":
                 case "1":
                 case "2":
@@ -51,9 +48,8 @@ namespace CalculadoraComplexa.Controllers
                 case "=":
                     if (Session["num2"].Equals("0") || Session["operacao"].Equals("")) break;
                     // escolher operação a fazer com o operador anterior
-                    switch(Session["operacao"])
-                    {
-                      
+                    switch (Session["operacao"]) {
+
                         case "+":
                             Session["num1"] = (Double.Parse((string)Session["num1"]) + Double.Parse((string)Session["num2"])).ToString();
                             break;
@@ -79,7 +75,7 @@ namespace CalculadoraComplexa.Controllers
 
                     ausar = "num1";
                     if (!Session["operacao"].Equals("")) { ausar = "num2"; }
-                    if(!((string)Session[ausar]).Contains(a))Session[ausar] += a;
+                    if (!((string)Session[ausar]).Contains(a)) Session[ausar] += a;
                     break;
                 case "+/-":
                     ausar = "num1";
@@ -96,8 +92,7 @@ namespace CalculadoraComplexa.Controllers
             return View();
         }
 
-        private void limpaCampos()
-        {
+        private void limpaCampos() {
             Session["num1"] = "0";
             Session["num2"] = "0";
             Session["operacao"] = "";
