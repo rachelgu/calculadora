@@ -13,7 +13,7 @@ namespace CalculadoraComplexa.Controllers
         public ActionResult Index()
         {
             limpaCampos();
-            ViewBag.Visor = 0;
+            ViewBag.Visor = "0";
             return View();
         }
         // POST: Home
@@ -50,8 +50,10 @@ namespace CalculadoraComplexa.Controllers
                     break;
                 case "=":
                     if (Session["num2"].Equals("0") || Session["operacao"].Equals("")) break;
+                    // escolher operação a fazer com o operador anterior
                     switch(Session["operacao"])
                     {
+                      
                         case "+":
                             Session["num1"] = (Double.Parse((string)Session["num1"]) + Double.Parse((string)Session["num2"])).ToString();
                             break;
@@ -65,8 +67,10 @@ namespace CalculadoraComplexa.Controllers
                             Session["num1"] = (Double.Parse((string)Session["num1"]) / Double.Parse((string)Session["num2"])).ToString();
                             break;
                     }
+
                     Session["num2"] = "0";
                     Session["operacao"] = "";
+                    //para concluir a operação
                     Session["depoisOp"] = true;
                     break;
                 case ",":
