@@ -10,13 +10,13 @@ namespace CalculadoraComplexa.Controllers {
         [HttpGet] // esta anotação é facultativa, pois, por defeito 
         public ActionResult Index() {
             limpaCampos();
-            ViewBag.Visor = "0";
+            ViewBag.old = "";
+        ViewBag.Visor = "0";
             return View();
         }
         // POST: Home
         [HttpPost]
         public ActionResult Index(string bt, string visor) {
-
             // identificar o valor da variavel 'bt'
             string ausar = "";
             switch (bt) {
@@ -41,7 +41,7 @@ namespace CalculadoraComplexa.Controllers {
                 case "+":
                 case "-":
                 case "x":
-                case "/":
+                case ":":
                     Session["depoisOp"] = false;
                     Session["operacao"] = bt;
                     break;
@@ -56,10 +56,10 @@ namespace CalculadoraComplexa.Controllers {
                         case "-":
                             Session["num1"] = (Double.Parse((string)Session["num1"]) - Double.Parse((string)Session["num2"])).ToString();
                             break;
-                        case "*":
+                        case "x":
                             Session["num1"] = (Double.Parse((string)Session["num1"]) * Double.Parse((string)Session["num2"])).ToString();
                             break;
-                        case "/":
+                        case ":":
                             Session["num1"] = (Double.Parse((string)Session["num1"]) / Double.Parse((string)Session["num2"])).ToString();
                             break;
                     }
@@ -87,8 +87,14 @@ namespace CalculadoraComplexa.Controllers {
                     break;
             }
 
+            ViewBag.old = "";
             if (Session["operacao"].Equals("")) ViewBag.visor = Session["num1"];
-            else ViewBag.visor = Session["num2"];
+            else {
+
+                ViewBag.old = Session["num1"] + " " + Session["operacao"];
+                ViewBag.visor = Session["num2"];
+            }
+                
             return View();
         }
 
